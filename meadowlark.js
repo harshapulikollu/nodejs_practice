@@ -1,5 +1,6 @@
 var express = require('express');
 var app = express();
+var fortune = require('./lib/fortune.js');
 
 //set up handlebars view engine
 var handlebars =  require('express3-handlebars')
@@ -12,13 +13,8 @@ app.set('port', process.env.PORT || 3000);
 //public for static resources
 app.use(express.static(__dirname + '/public'));
 
-//fortunr cookies in abt page
-var fortunes = ["COnques ur fears or they will conquer u",
-				"rivers need springs.",
-				"dont fear wgar u dont know",
-				"u will have a pleasent surprsie",
-				"whenevr possible, keep it simple"
-];
+
+
 
 app.get('/', function(req, res){
 		//res.type('text/plain');
@@ -29,8 +25,8 @@ app.get('/', function(req, res){
 app.get('/about', function(req,res){
 		//res.type('text/plain');
 		//res.send('about meadowlark travels');
-		var randomFortune = fortunes[Math.floor(Math.random()* fortunes.length)];// generating random num for fortunes array.
-		res.render('about',{ fortune: randomFortune});
+		
+		res.render('about',{ fortune: fortune.getFortune()});
 });		
 
 //custom 404 page
